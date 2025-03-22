@@ -109,7 +109,7 @@ class AMapLocation {
 
   @override
   int get hashCode =>
-      hashValues(provider, latLng, accuracy, altitude, bearing, speed, time);
+      Object.hash(provider, latLng, accuracy, altitude, bearing, speed, time);
 }
 
 /// 经纬度坐标对象， 单位为度.
@@ -120,9 +120,9 @@ class LatLng {
   ///
   /// [latitude]取值范围 [-180.0,179.0]
   const LatLng(double latitude, double longitude)
-      : latitude =
-            (latitude < -90.0 ? -90.0 : (90.0 < latitude ? 90.0 : latitude)),
-        longitude = (longitude + 180.0) % 360.0 - 180.0;
+    : latitude =
+          (latitude < -90.0 ? -90.0 : (90.0 < latitude ? 90.0 : latitude)),
+      longitude = (longitude + 180.0) % 360.0 - 180.0;
 
   /// 纬度
   final double latitude;
@@ -151,7 +151,7 @@ class LatLng {
   }
 
   @override
-  int get hashCode => hashValues(latitude, longitude);
+  int get hashCode => Object.hash(latitude, longitude);
 }
 
 /// 经纬度对齐的矩形.
@@ -159,8 +159,10 @@ class LatLngBounds {
   /// 使用传入的西南角坐标[southwest]和东北角坐标[northeast]创建一个矩形区域.
   LatLngBounds({required this.southwest, required this.northeast}) {
     try {
-      assert(southwest.latitude <= northeast.latitude,
-          '西南角纬度超过了东北角纬度(${southwest.latitude} > ${northeast.latitude})');
+      assert(
+        southwest.latitude <= northeast.latitude,
+        '西南角纬度超过了东北角纬度(${southwest.latitude} > ${northeast.latitude})',
+      );
     } catch (e) {
       print(e);
     }
@@ -226,5 +228,5 @@ class LatLngBounds {
   }
 
   @override
-  int get hashCode => hashValues(southwest, northeast);
+  int get hashCode => Object.hash(southwest, northeast);
 }
